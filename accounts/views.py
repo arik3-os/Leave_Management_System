@@ -96,16 +96,17 @@ from django.shortcuts import render
 from .models import Leave
 
 
+@login_required
 def Leaves(request):
-    
-    leaves = Leave.objects.filter(
-        user=request.user
-    )
+    try:
+        leaves = Leave.objects.filter(user=request.user)
+    except Exception as e:
+        leaves = []  # Fallback to an empty list if the table/query fails
 
     return render(request, "leaves.html", {
         "leaves": leaves
     })
-
+    
 @login_required
 def applyleave(request):
     if request.method == "POST":
