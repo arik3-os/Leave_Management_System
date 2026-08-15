@@ -100,8 +100,8 @@ from .models import Leave
 def Leaves(request):
     try:
         leaves = Leave.objects.filter(user=request.user)
-    except Exception as e:
-        leaves = []  # Fallback to an empty list if the table/query fails
+    except Exception:
+        leaves = []  # Prevents a 500 error if the table or field doesn't match yet
 
     return render(request, "leaves.html", {
         "leaves": leaves
@@ -321,18 +321,16 @@ def checkout(request):
 
 @login_required
 def swipedata(request):
-
-    attendances = Attendance.objects.filter(
-        user=request.user
-    ).order_by("-date")
-
+    try:
+        attendances = Attendance.objects.filter(
+            user=request.user
+        ).order_by("-date")
+    except Exception:
+        attendances = []  # Fallback to empty list if table is missing
 
     context = {
-
         "today": timezone.localdate(),
-
         "attendances": attendances
-
     }
 
     return render(
