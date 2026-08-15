@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-200 p-10">
+
+    <!-- Welcome Section -->
+    <div class="text-center text-gray-800 mt-10">
+        <h1 class="text-5xl font-bold">
+            Hello {{ user.username }}
+        </h1>
+        <h2 class="text-4xl font-bold mt-3 text-blue-700">
+            Welcome to Leave Management Version 1.0
+        </h2>
+        <p class="mt-4 text-lg text-gray-600">
+            View and manage your daily working hours.
+        </p>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
+        <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <h3 class="text-gray-500">Today's Hours</h3>
+            <h1 class="text-4xl font-bold text-blue-600 mt-2">8.5</h1>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <h3 class="text-gray-500">Weekly Hours</h3>
+            <h1 class="text-4xl font-bold text-green-600 mt-2">41</h1>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <h3 class="text-gray-500">Overtime</h3>
+            <h1 class="text-4xl font-bold text-orange-500 mt-2">6</h1>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+            <h3 class="text-gray-500">Pending</h3>
+            <h1 class="text-4xl font-bold text-red-500 mt-2">2</h1>
+        </div>
+    </div>
+
+    <!-- Timesheet Table -->
+    <div class="bg-white rounded-2xl shadow-lg mt-12 overflow-hidden">
+
+        <div class="flex justify-between items-center p-6 border-b">
+            <h2 class="text-2xl font-bold text-blue-700">
+                Timesheet Records
+            </h2>
+            <a href="{% url 'addentry' %}">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2">
+                    <span>+</span> Add Entry
+                </button>
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="p-4 text-left">Date</th>
+                        <th class="p-4 text-left">Project</th>
+                        <th class="p-4 text-left">Task</th>
+                        <th class="p-4 text-left">Check In</th>
+                        <th class="p-4 text-left">Check Out</th>
+                        <th class="p-4 text-left">Description</th>
+                        <th class="p-4 text-left">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in timesheets %}
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-6 py-4">{{ entry.date }}</td>
+                        <td class="px-6 py-4">{{ entry.project }}</td>
+                        <td class="px-6 py-4">{{ entry.task }}</td>
+                        <td class="px-6 py-4">{{ entry.check_in }}</td>
+                        <td class="px-6 py-4">{{ entry.check_out|default:"-" }}</td>
+                        <td class="px-6 py-4">{{ entry.description }}</td>
+                        <td class="px-6 py-4">
+                         {% if entry.status == "Pending" %}
+                        <span class="bg-yellow-500 text-white px-5 py-2 rounded-3xl text-sm font-medium whitespace-nowrap inline-block">
+                            Pending
+                        </span>
+                        {% elif entry.status == "Verified" %}
+                    <span class="bg-green-600 text-white px-5 py-2 rounded-3xl text-sm font-medium whitespace-nowrap inline-block">
+                        Verified
+                    </span>
+                        {% else %}
+                    <span class="bg-red-600 text-white px-5 py-2 rounded-3xl text-sm font-medium whitespace-nowrap inline-block">
+                        Not Verified
+                    </span>
+                    {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center py-12 text-gray-500">
+                            No timesheet entries found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

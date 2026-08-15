@@ -1,0 +1,217 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gray-100 py-10">
+
+    <div class="max-w-5xl mx-auto bg-white shadow-xl rounded-xl p-8">
+
+        <!-- Heading -->
+        <div class="border-b pb-5 mb-8">
+            <h2 class="text-3xl font-bold text-blue-700">
+                Employee Pay Details
+            </h2>
+            <p class="text-gray-500 mt-2">
+                Update employee salary and payment information.
+            </p>
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Employee Information -->
+            <h3 class="text-xl font-semibold text-blue-700 mb-5">
+                Employee Information
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Employee ID
+                    </label>
+                    <input type="text"
+                           value="{{ employee.employee_id }}"
+                           readonly
+                           class="w-full rounded-lg border border-gray-300 bg-gray-100 px-4 py-3">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Employee Name
+                    </label>
+                    <input type="text"
+                           value="{{ employee.name }}"
+                           readonly
+                           class="w-full rounded-lg border border-gray-300 bg-gray-100 px-4 py-3">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Department
+                    </label>
+                    <input type="text"
+                           value="{{ employee.department }}"
+                           readonly
+                           class="w-full rounded-lg border border-gray-300 bg-gray-100 px-4 py-3">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Designation
+                    </label>
+                    <input type="text"
+                           value="{{ employee.designation }}"
+                           readonly
+                           class="w-full rounded-lg border border-gray-300 bg-gray-100 px-4 py-3">
+                </div>
+
+            </div>
+
+            <!-- Pay Details -->
+
+            <h3 class="text-xl font-semibold text-blue-700 mt-10 mb-5">
+                Salary Information
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Basic Salary (₹)
+                    </label>
+                    <input type="number"
+                           name="basic_salary"
+                           value="{{ pay.basic_salary }}"
+                           placeholder="Enter salary as per employee's role"
+
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        House Rent Allowance (HRA)
+                    </label>
+                    <input type="number"
+                           name="hra"
+                           value="{{ pay.hra }}"
+                           placeholder="eg: 10000/-"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Dearness Allowance (DA)
+                    </label>
+                    <input type="number"
+                           name="da"
+                           value="{{ pay.da }}"
+                           placeholder="e.g: 5000/-"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Special Allowance
+                    </label>
+                    <input type="number"
+                           name="special_allowance"
+                           value="{{ pay.special_allowance }}"
+                           placeholder="eg.: 3000/-"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Bonus
+                    </label>
+                    <input type="number"
+                           name="bonus"
+                           value="{{ pay.bonus }}"
+                           placeholder="e.g: 5000/-"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Professional Tax
+                    </label>
+                    <input type="number"
+                           name="professional_tax"
+                           value="{{ pay.professional_tax }}"
+                           placeholder="200"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Income Tax
+                    </label>
+                    <input type="number"
+                           name="income_tax"
+                           value="{{ pay.income_tax }}"
+                           placeholder="2500"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+               <select name="payment_mode"
+        class="w-full rounded-lg border border-gray-300 px-4 py-3">
+
+    <option value="Bank Transfer"
+        {% if pay.payment_mode == "Bank Transfer" %}selected{% endif %}>
+        Bank Transfer
+    </option>
+
+    <option value="UPI"
+        {% if pay.payment_mode == "UPI" %}selected{% endif %}>
+        UPI
+    </option>
+
+    <option value="Cheque"
+        {% if pay.payment_mode == "Cheque" %}selected{% endif %}>
+        Cheque
+    </option>
+
+    <option value="Cash"
+        {% if pay.payment_mode == "Cash" %}selected{% endif %}>
+        Cash
+    </option>
+
+</select>
+                </div>
+
+                <div>
+                    <label class="block mb-2 font-semibold text-gray-700">
+                        Payment date
+                    </label>
+                    <input type="date"
+                           name="payment_date"
+                           value="{{ pay.payment_date|date:'Y-m-d' }}"
+                           class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:border-blue-500">
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+
+            <div class="mt-10 flex justify-center gap-4">
+
+                <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg">
+                    Update Pay Details
+                </button>
+
+                <a href="{% url 'employee_profiles' %}"
+                   class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg">
+                    Back
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

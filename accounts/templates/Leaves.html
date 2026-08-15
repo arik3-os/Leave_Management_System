@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-200 p-10">
+
+
+<!-- Header -->
+
+<div class="text-center text-black mt-10">
+
+    <h1 class="text-5xl font-bold">
+        Hello {{ user.username }}
+    </h1>
+
+
+    <h2 class="text-4xl font-bold mt-3">
+        Leave Management Version 1.0
+    </h2>
+
+
+    <p class="mt-5 text-lg">
+        Manage your leaves and attendance easily.
+    </p>
+
+</div>
+
+
+
+<!-- Cards -->
+
+<div class="grid grid-cols-4 gap-6 mt-16">
+
+
+<div class="bg-green-100 rounded-xl shadow p-5">
+<h2 class="text-blue-700 font-semibold">
+Available Leaves
+</h2>
+
+<p class="text-5xl font-bold mt-3">
+10
+</p>
+
+</div>
+
+
+
+
+<div class="bg-yellow-100 rounded-xl shadow p-5">
+
+<h2 class="text-blue-700 font-semibold">
+Pending Requests
+</h2>
+
+<p class="text-5xl font-bold mt-3">
+{{ leaves|length }}
+</p>
+
+</div>
+
+
+
+
+<div class="bg-red-100 rounded-xl shadow p-5">
+
+<h2 class="text-blue-700 font-semibold">
+Rejected Leaves
+</h2>
+
+<p class="text-5xl font-bold mt-3 text-red-600">
+3
+</p>
+
+</div>
+
+
+
+
+<div class="bg-green-100 rounded-xl shadow p-5">
+
+<h2 class="text-blue-700 font-semibold">
+Approved Leaves
+</h2>
+
+<p class="text-5xl font-bold mt-3">
+5
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<!-- Apply Button -->
+
+
+<div class="flex justify-end mt-8">
+
+<button
+onclick="window.location.href='{% url 'applyleave' %}'"
+class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+
+Apply Leave
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<!-- Leave Table -->
+
+
+<div class="bg-white rounded-xl shadow mt-10 p-6 overflow-x-auto">
+
+
+<table class="w-full text-left">
+
+
+<thead>
+
+
+<tr class="border-b text-gray-600">
+
+
+<th class="p-4">
+Name
+</th>
+
+
+<th class="p-4">
+Leave Type
+</th>
+
+
+<th class="p-4">
+From
+</th>
+
+
+<th class="p-4">
+To
+</th>
+
+
+<th class="p-4">
+Status
+</th>
+
+
+<th class="p-4">
+Reason
+</th>
+
+
+<th class="p-4">
+Approver
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+
+
+<tbody>
+
+
+{% for leave in leaves %}
+
+
+<tr class="border-b">
+
+
+<td class="p-4">
+
+{{ leave.user.username }}
+
+</td>
+
+
+
+
+<td class="p-4">
+
+{{ leave.leave_type }}
+
+</td>
+
+
+
+
+<td class="p-4">
+
+{{ leave.from_date }}
+
+</td>
+
+
+
+
+<td class="p-4">
+
+{{ leave.to_date }}
+
+</td>
+
+
+
+
+
+<td class="p-4">
+
+{% if leave.status == "Pending" %}
+
+<span class="bg-yellow-200 px-4 py-2 rounded">
+Pending
+</span>
+
+
+{% elif leave.status == "Approved" %}
+
+<span class="bg-green-200 px-4 py-2 rounded">
+Approved
+</span>
+
+
+{% elif leave.status == "Rejected" %}
+
+<span class="bg-red-200 px-4 py-2 rounded">
+Rejected
+</span>
+
+
+{% endif %}
+
+</td>
+
+<td class="p-4">
+
+{{ leave.reason }}
+
+</td>
+
+
+
+
+
+<td class="p-4">
+
+{{ leave.approver }}
+
+</td>
+
+
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+<tr>
+
+<td colspan="7" class="text-center p-5">
+
+No leave applications yet
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+{% endblock content %}

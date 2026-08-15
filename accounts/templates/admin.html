@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800">Hello Admin</h1>
+            <h2 class="text-3xl font-semibold text-blue-700 mt-2">
+                Welcome to Admin Dashboard
+            </h2>
+        </div>
+<div class="flex justify-end mt-5 mb-8">
+<button
+    onclick="window.location.href='{% url 'employee_profiles' %}'"
+    class="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+
+    Employee Profiles
+</button>
+</div>
+
+<!-- Leave Requests -->
+<div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-10">
+    <h2 class="text-2xl font-bold text-blue-700 mb-6 flex items-center gap-2">
+        <span>Leave Requests</span>
+    </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border border-gray-200 rounded-xl">
+                    <thead class="bg-blue-50">
+                        <tr>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Name</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Leave Type</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Date</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Status</th>
+                            <th class="border border-gray-200 p-4 text-center font-semibold text-gray-700">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leaves %}
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="border border-gray-200 p-4">{{ leave.name }}</td>
+                            <td class="border border-gray-200 p-4">{{ leave.leave_type }}</td>
+                            <td class="border border-gray-200 p-4">
+                                {{ leave.from_date }} - {{ leave.to_date }}
+                            </td>
+                            <td class="border border-gray-200 p-4">
+                                {% if leave.status == "Pending" %}
+                                    <span class="bg-yellow-100 text-yellow-800 px-4 py-1.5 rounded-full text-sm font-medium">Pending</span>
+                                {% elif leave.status == "Approved" %}
+                                    <span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-medium">Approved</span>
+                                {% else %}
+                                    <span class="bg-red-100 text-red-700 px-4 py-1.5 rounded-full text-sm font-medium">Rejected</span>
+                                {% endif %}
+                            </td>
+                            <td class="border border-gray-200 p-4 text-center">
+                                <div class="flex gap-3 justify-center">
+                                    <a href="{% url 'approve_leave' leave.id %}" 
+                                       class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition-colors">
+                                        Approve
+                                    </a>
+                                    <a href="{% url 'reject_leave' leave.id %}" 
+                                       class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition-colors">
+                                        Reject
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-12 text-gray-500">
+                                No leave requests found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Employee Attendance -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-10">
+            <h2 class="text-2xl font-bold text-green-700 mb-6">Employee Attendance</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border border-gray-200 rounded-xl">
+                    <thead class="bg-green-50">
+                        <tr>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Employee</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Date</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Check In</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Check Out</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for attendance in attendances %}
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="border border-gray-200 p-4">{{ attendance.user.username }}</td>
+                            <td class="border border-gray-200 p-4">{{ attendance.date }}</td>
+                            <td class="border border-gray-200 p-4">{{ attendance.check_in }}</td>
+                            <td class="border border-gray-200 p-4">{{ attendance.check_out|default:"-" }}</td>
+                            <td class="border border-gray-200 p-4">
+                                {% if attendance.status == "Present" %}
+                                    <span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-medium">Present</span>
+                                {% else %}
+                                    <span class="bg-red-100 text-red-700 px-4 py-1.5 rounded-full text-sm font-medium">{{ attendance.status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-12 text-gray-500">
+                                No attendance records found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Employee Timesheets -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+            <h2 class="text-2xl font-bold text-purple-700 mb-6">Employee Timesheets</h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full border border-gray-200 rounded-xl">
+                    <thead class="bg-purple-50">
+                        <tr>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Employee</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Date</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Project</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Task</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Description</th>
+                            <th class="border border-gray-200 p-4 text-left font-semibold text-gray-700">Status</th>
+                            <th class="border border-gray-200 p-4 text-center font-semibold text-gray-700">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in timesheets %}
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="border border-gray-200 p-4">{{ entry.user.username }}</td>
+                            <td class="border border-gray-200 p-4">{{ entry.date }}</td>
+                            <td class="border border-gray-200 p-4">{{ entry.project }}</td>
+                            <td class="border border-gray-200 p-4">{{ entry.task }}</td>
+                            <td class="border border-gray-200 p-4">{{ entry.description }}</td>
+                            <td class="border border-gray-200 p-4">
+                                {% if entry.status == "Pending" %}
+                                    <span class="bg-yellow-100 text-yellow-800 px-4 py-1.5 rounded-full text-sm font-medium">Pending</span>
+                                {% elif entry.status == "Verified" %}
+                                    <span class="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-sm font-medium">Verified</span>
+                                {% else %}
+                                    <span class="bg-red-100 whitespace-nowrap text-red-700 px-3 py-1 rounded-full text-xs font-medium inline-block">Not Verified</span>
+                                {% endif %}
+                            </td>
+                            <td class="border border-gray-200 p-4 text-center">
+                                <div class="flex gap-3 justify-center">
+                                    <a href="{% url 'verify_timesheet' entry.id %}" 
+                                       class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition-colors">
+                                        Verify
+                                    </a>
+                                    <a href="{% url 'notverify_timesheet' entry.id %}" 
+                                       class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl text-sm font-medium transition-colors">
+                                        Not Verify
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-12 text-gray-500">
+                                No timesheet records found.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

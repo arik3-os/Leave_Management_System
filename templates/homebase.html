@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+
+<body class="h-full">
+
+
+<div class="flex h-screen bg-gradient-to-r from-blue-700 to-white-100">
+          
+     {% include "messages.html" %}
+
+    <main class="flex-1 overflow-y-auto">
+
+        {% block content %}
+        {% endblock content %}
+
+    </main>
+
+
+</div>
+
+
+</body>
+{% include "footer.html" %}
+</html>

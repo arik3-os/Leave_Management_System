@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Leave Management System{% endblock %}
+    </title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+    <div class="flex flex-1 items-stretch">
+
+        <div class="print:hidden">
+            {% include "nav.html" %}
+        </div>
+
+        <main class="flex-1 overflow-y-auto">
+
+            <div class="print:hidden">
+                {% include "messages.html" %}
+            </div>
+
+            {% block content %}
+            {% endblock %}
+
+        </main>
+
+    </div>
+
+    <div class="print:hidden">
+        {% include "footer.html" %}
+    </div>
+</body>
+
+</html>

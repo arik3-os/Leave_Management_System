@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gradient-to-r from-blue-100 via-white to-blue-200 p-10">
+
+    <!-- Welcome Section -->
+    <div class="text-center text-black mt-16">
+
+        <h1 class="text-5xl font-bold">
+            Hello {{ user.username }}
+        </h1>
+
+        <h2 class="text-4xl font-bold mt-2">
+            Welcome to Leave Management Version 1.O
+        </h2>
+
+        <p class="mt-5 text-lg">
+            Manage your leaves, attendance and employee information easily.
+        </p>
+
+    </div>
+
+<div class="flex justify-end mt-5">
+<button
+onclick="window.location.href='{% url 'employee' %}'"
+class="mt-5 px-5 py-2  bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+
+   + Edit Profile
+
+</button>
+</div>
+    <!-- Dashboard Cards -->
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+
+
+        <!-- Leave Card -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+
+            <h3 class="text-xl font-semibold text-blue-700">
+                Available Leaves
+            </h3>
+
+            <p class="text-5xl font-bold mt-4 text-gray-800">
+                10
+            </p>
+
+<button
+onclick="window.location.href='{% url 'leaves' %}'"
+class="mt-5 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+
+    Apply Leave
+
+</button>
+
+        </div>
+
+
+
+        <!-- Attendance Card -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+
+            <h3 class="text-xl font-semibold text-blue-700">
+                Attendance
+            </h3>
+
+            <p class="text-5xl font-bold mt-4 text-gray-800">
+                95%
+            </p>
+
+            <button class="mt-5 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                View Details
+            </button>
+
+        </div>
+
+
+
+
+        <!-- Pending Card -->
+        <div class="bg-white rounded-xl shadow-lg p-6">
+
+            <h3 class="text-xl font-semibold text-blue-700">
+                Pending Requests
+            </h3>
+
+            <p class="text-5xl font-bold mt-4 text-gray-800">
+                3
+            </p>
+
+
+            <button class="mt-5 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Check Status
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- Information Section -->
+
+    <div class="bg-white rounded-xl shadow-lg mt-10 p-8">
+
+
+        <h2 class="text-2xl font-bold text-blue-700">
+            Recent Activity
+        </h2>
+
+
+        <div class="mt-5 space-y-4">
+
+
+            <div class="border-b pb-3">
+                Leave request submitted
+                <span class="text-gray-500">
+                    Today
+                </span>
+            </div>
+
+
+            <div class="border-b pb-3">
+                Attendance marked successfully
+                <span class="text-gray-500">
+                    Yesterday
+                </span>
+            </div>
+
+
+            <div>
+                Salary slip available
+                <span class="text-gray-500">
+                    2 days ago
+                </span>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+{% endblock content %}
