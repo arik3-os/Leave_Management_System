@@ -106,33 +106,24 @@ def Leaves(request):
         "leaves": leaves
     })
 
+@login_required
 def applyleave(request):
-    
     if request.method == "POST":
-
-        name = request.POST.get("name", "").strip()
-        email = request.POST.get("email", "").strip()
         leave_type = request.POST.get("leave_type", "").strip()
         from_date = request.POST.get("from_date", "").strip()
         to_date = request.POST.get("to_date", "").strip()
         reason = request.POST.get("reason", "").strip()
 
-        # Check if any field is empty
-        if not all([name, email, leave_type, from_date, to_date, reason]):
+        # Check if required fields are empty
+        if not all([leave_type, from_date, to_date, reason]):
             messages.error(request, "Please fill all the fields.")
             return render(request, "applyleave.html")
 
-        # Check whether email is registered
-        user = User.objects.filter(email=email).first()
-
-        if user is None:
-            messages.error(request, "Email not registered. Please register first.")
-            return redirect("register")
-
+        # Automatically use the logged-in user's info
         Leave.objects.create(
-            user=user,
-            name=name,
-            email=email,
+            user=request.user,
+            name=request.user.get_full_name() or request.user.username,
+            email=request.user.email,
             leave_type=leave_type,
             from_date=from_date,
             to_date=to_date,
