@@ -103,7 +103,7 @@ def Leaves(request):
     except Exception:
         leaves = []  # Prevents a 500 error if the table or field doesn't match yet
 
-    return render(request, "leaves.html", {
+    return render(request, "Leaves.html", {
         "leaves": leaves
     })
     
@@ -335,7 +335,7 @@ def swipedata(request):
 
     return render(
         request,
-        "swipedata.html",
+        "SwipeData.html",
         context
     )
 
