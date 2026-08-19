@@ -1,8 +1,9 @@
-<div class="hidden md:flex flex-col w-64 bg-gray-800 min-h-[130vh]">
+<!-- ================= DESKTOP SIDEBAR ================= -->
+<div class="hidden md:flex flex-col w-64 bg-gray-800 min-h-screen">
 
     <!-- Logo -->
-    <div class="flex items-center justify-center h-16 bg-gray-900">
-        <span class="text-white font-bold uppercase">
+    <div class="flex items-center justify-center h-16 bg-gray-900 px-3">
+        <span class="text-white font-bold uppercase text-sm text-center">
             Leave Management Version 1.0
         </span>
     </div>
@@ -49,20 +50,20 @@
 
         </nav>
 
-        <!-- Profile Button at Bottom -->
+        <!-- Profile -->
         <div class="p-4 border-t border-gray-700">
 
             <a href="{% url 'profile' %}"
                class="flex items-center gap-3 px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md transition">
 
-                <!-- User Icon -->
                 <svg xmlns="http://www.w3.org/2000/svg"
                      class="w-6 h-6"
                      fill="none"
                      viewBox="0 0 24 24"
                      stroke="currentColor"
                      stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
                           d="M5.121 17.804A9 9 0 1118.879 17.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                 </svg>
 
@@ -75,3 +76,149 @@
     </div>
 
 </div>
+
+
+<!-- ================= MOBILE NAVBAR ================= -->
+<div class="md:hidden w-full bg-gray-900">
+
+    <!-- Top Bar -->
+    <div class="h-16 px-4 flex items-center justify-between">
+
+        <!-- Logo -->
+        <span class="text-white font-bold text-sm">
+            Leave Management
+        </span>
+
+        <!-- Menu Button -->
+        <button id="mobile-menu-button"
+                type="button"
+                class="text-white p-2 rounded-md hover:bg-gray-700">
+
+            <!-- Hamburger Icon -->
+            <svg id="menu-open-icon"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="w-7 h-7"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="2">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+
+            <!-- Close Icon -->
+            <svg id="menu-close-icon"
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="hidden w-7 h-7"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+                 stroke-width="2">
+
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+
+        </button>
+
+    </div>
+
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+         class="hidden bg-gray-800 px-3 py-3 space-y-1">
+
+        <a href="{% url 'Home' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            Home
+        </a>
+
+        <a href="{% url 'dashboard' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            Dashboard
+        </a>
+
+        <a href="{% url 'leaves' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            Leaves
+        </a>
+
+        <a href="{% url 'swipedata' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            SwipeData
+        </a>
+
+        <a href="{% url 'timesheet' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            Timesheet
+        </a>
+
+        <a href="{% url 'payslip' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            Payslip
+        </a>
+
+        <a href="{% url 'assets' %}"
+           class="block px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+            Assets
+        </a>
+
+        <!-- Profile -->
+        <div class="border-t border-gray-700 pt-2 mt-2">
+
+            <a href="{% url 'profile' %}"
+               class="flex items-center gap-3 px-4 py-3 text-gray-100 hover:bg-gray-700 rounded-md">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-6 h-6"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor"
+                     stroke-width="2">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M5.121 17.804A9 9 0 1118.879 17.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+
+                <span>Profile</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MOBILE MENU JAVASCRIPT ================= -->
+<script>
+
+    const mobileMenuButton =
+        document.getElementById("mobile-menu-button");
+
+    const mobileMenu =
+        document.getElementById("mobile-menu");
+
+    const menuOpenIcon =
+        document.getElementById("menu-open-icon");
+
+    const menuCloseIcon =
+        document.getElementById("menu-close-icon");
+
+
+    mobileMenuButton.addEventListener("click", function () {
+
+        mobileMenu.classList.toggle("hidden");
+
+        menuOpenIcon.classList.toggle("hidden");
+
+        menuCloseIcon.classList.toggle("hidden");
+
+    });
+
+</script>
