@@ -2,28 +2,36 @@
 <html lang="en" class="h-full">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
+<body class="min-h-screen">
 
-<body class="h-full">
+    <div class="min-h-screen flex flex-col bg-gradient-to-r from-blue-700 to-white">
 
+        <!-- Messages -->
+        <div>
+            {% include "messages.html" %}
+        </div>
 
-<div class="flex h-screen bg-gradient-to-r from-blue-700 to-white-100">
-          
-     {% include "messages.html" %}
+        <!-- Main Content -->
+        <main class="flex-1 w-full">
 
-    <main class="flex-1 overflow-y-auto">
+            {% block content %}
+            {% endblock content %}
 
-        {% block content %}
-        {% endblock content %}
+        </main>
 
-    </main>
+        <!-- Footer -->
+        <div>
+            {% include "footer.html" %}
+        </div>
 
-
-</div>
-
+    </div>
 
 </body>
-{% include "footer.html" %}
+
 </html>
